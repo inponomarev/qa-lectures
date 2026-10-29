@@ -2,7 +2,7 @@
 cd "$(dirname "$0")"
 echo "Running spellchecking..."
 result=$(
-for i in {01..08}
+for i in {01..09}
 do
    pushd slides${i}/src/main/asciidoc > /dev/null
    cat lecture.adoc | sed "s/[-a-zA-Z]/ /g" | aspell --run-together --run-together-limit=5 --master=ru --personal=../../../../dict-ru.txt list;

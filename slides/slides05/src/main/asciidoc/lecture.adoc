@@ -1,4 +1,4 @@
-= Лекция 5
+= Software Testing. Лекция 5: Property-based testing и fuzzing
 Иван Пономарёв
 :revealjs_theme: black
 :revealjs_customtheme: white_course.css
@@ -25,5 +25,62 @@ include::_doc_general_attributes.adoc[]
 
 :!figure-caption:
 
-== Слайд 1
+== Свойство, область допустимых входов и генератор данных
 
+// TODO
+
+== Распределение генерации, граничные случаи и ограничения
+
+// TODO
+
+== Shrinking: сокращение контрпримера
+
+// TODO
+
+== Seed и воспроизведение сбоя
+
+// TODO
+
+== Differential testing
+
+// TODO
+
+== Metamorphic testing
+
+// TODO
+
+== Stateful PBT: модель состояния и последовательности команд
+
+// TODO
+
+== Демо: шахматы, выполнение и отмена хода
+
+// TODO
+
+== Демо: нарушение свойства и минимальный контрпример
+
+// TODO
+
+== Fuzzing: случайные и структурированные входы
+
+// TODO
+
+== Мутация входных данных и обратная связь по покрытию
+
+// TODO
+
+== Демо: fuzzing обработки выражений
+
+// TODO
+
+== Качество оракула и общие ошибки реализации и эталона
+
+// TODO
+
+== Ограничения round-trip свойств
+
+// TODO
+
+== Итоги
+
+// TODO
