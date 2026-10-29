@@ -18,7 +18,7 @@
         <asciidoctorj.version>3.0.1</asciidoctorj.version>
         <asciidoctorj.diagram.version>3.2.1</asciidoctorj.diagram.version>
 		<asciidoctorj.diagram.plantuml.version>1.2026.2</asciidoctorj.diagram.plantuml.version>
-        <jruby.version>9.4.15.0</jruby.version>
+        <jruby.version>10.1.2.0</jruby.version>
         <!-- AsciidoctorJ bundles Rouge 3.30.0, whose Java lexer predates `record`,
              `sealed`, `permits` and `yield`. A newer gem installed into the local
              gemPath takes precedence over the bundled one. -->
