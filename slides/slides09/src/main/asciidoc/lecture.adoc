@@ -1,0 +1,86 @@
+= Software Testing. Лекция 9: Формальные методы и TLA+: проверка модели поведения
+Иван Пономарёв
+:revealjs_theme: black
+:revealjs_customtheme: white_course.css
+:revealjs_slideNumber:
+:revealjs_history:
+:revealjs_progress:
+:encoding: UTF-8
+:lang: ru
+include::_doc_general_attributes.adoc[]
+:doctype: article
+:toclevels: 3
+:imagesdir: images
+:source-highlighter: highlightjs
+:highlightjsdir: highlight
+:icons: font
+:iconfont-remote!:
+:iconfont-name: font-awesome-4.7.0/css/font-awesome
+:revealjs_mouseWheel: true
+:revealjs_center: false
+:revealjs_transition: none
+:revealjs_width: 1600
+:revealjs_height: 900
+:zsp: &#8203;
+
+:!figure-caption:
+
+== Начальные состояния и отношение переходов
+
+// TODO
+
+== Множество достижимых состояний
+
+// TODO
+
+== Инварианты, safety и liveness
+
+// TODO
+
+== Предположения о fairness
+
+// TODO
+
+== Недетерминизм и конкурентные исполнения
+
+// TODO
+
+== TLA+ и PlusCal
+
+// TODO
+
+== Проверка модели с помощью TLC
+
+// TODO
+
+== Демо: модель Therac-25
+
+// TODO
+
+== Контрпример как трасса состояний
+
+// TODO
+
+== Демо: исправление модели и повторная проверка
+
+// TODO
+
+== Комбинаторный взрыв состояний и ограничение модели
+
+// TODO
+
+== Выбор абстракции
+
+// TODO
+
+== Проверка конечной модели vs общее доказательство
+
+// TODO
+
+== Соответствие модели реализации и границы выводов
+
+// TODO
+
+== Итоги курса
+
+// TODO

@@ -17,4 +17,4 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y aspell aspell-ru
       - name: Run spellcheck
-        run: ./slides/spellcheck-ru.sh
+        run: bash slides/spellcheck-ru.sh
