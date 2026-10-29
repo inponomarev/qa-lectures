@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>ru.inponomarev</groupId>
+    <artifactId>qa-lectures-slides-parent</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <name>QA lectures slides</name>
+    <description>Slides for QA lectures</description>
+    <packaging>pom</packaging>
+    <developers>
+        <developer>
+            <name>Ivan Ponomarev</name>
+            <email>ponomarev@phystech.edu</email>
+        </developer>
+    </developers>
+
+    <modules>
+        <module>slides01</module>
+        <module>slides02</module>
+        <module>slides03</module>
+        <module>slides04</module>
+        <module>slides05</module>
+        <module>slides06</module>
+        <module>slides07</module>
+        <module>slides08</module>
+    </modules>
+</project>

@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>ru.inponomarev</groupId>
+    <artifactId>qa-lectures-slides-base</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <name>Lecture slides base POM</name>
+    <description>Lecture slides base POM</description>
+    <packaging>pom</packaging>
+
+    <properties>
+        <project.slides.directory>${project.build.directory}/generated-slides</project.slides.directory>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <asciidoctor.maven.plugin.version>3.2.0</asciidoctor.maven.plugin.version>
+        <asciidoctorj.version>3.0.1</asciidoctorj.version>
+        <asciidoctorj.diagram.version>3.2.1</asciidoctorj.diagram.version>
+		<asciidoctorj.diagram.plantuml.version>1.2026.2</asciidoctorj.diagram.plantuml.version>
+        <jruby.version>9.4.15.0</jruby.version>
+        <!-- AsciidoctorJ bundles Rouge 3.30.0, whose Java lexer predates `record`,
+             `sealed`, `permits` and `yield`. A newer gem installed into the local
+             gemPath takes precedence over the bundled one. -->
+        <rouge.version>5.1.0</rouge.version>
+        <revealjs.version>3.9.2</revealjs.version>
+        <!-- Use 'master' as version and remove the 'v' prefixing the download url to use the current snapshot version  -->
+        <asciidoctor-revealjs.version>master</asciidoctor-revealjs.version>
+    </properties>
+
+
+    <organization>
+        <name>MIPT</name>
+        <url>https://mipt.ru/</url>
+    </organization>
+    <developers>
+        <developer>
+            <name>Ivan Ponomarev</name>
+            <email>ponomarev@phystech.edu</email>
+        </developer>
+    </developers>
+
+    <dependencies>
+        <dependency>
+            <groupId>rubygems</groupId>
+            <artifactId>rouge</artifactId>
+            <version>${rouge.version}</version>
+            <type>gem</type>
+        </dependency>
+        <dependency>
+            <groupId>rubygems</groupId>
+            <artifactId>asciidoctor-revealjs</artifactId>
+            <version>4.1.0</version>
+            <type>gem</type>
+            <!-- Avoid downloading gems included in AsciidoctorJ -->
+            <exclusions>
+                <exclusion>
+                    <groupId>rubygems</groupId>
+                    <artifactId>asciidoctor</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>rubygems</groupId>
+                    <artifactId>thread_safe</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>rubygems</groupId>
+                    <artifactId>concurrent-ruby</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <defaultGoal>process-resources</defaultGoal>
+        <extensions>
+            <extension>
+                <!-- this allows us to download gems -->
+                <groupId>org.jruby.maven</groupId>
+                <artifactId>mavengem-wagon</artifactId>
+                <version>2.0.3</version>
+            </extension>
+        </extensions>
+        <resources>
+            <resource>
+                <directory>${basedir}/../slides-base/src/main/resources</directory>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.5.0</version>
+                <configuration>
+                    <outputDirectory>${basedir}/target/generated-slides</outputDirectory>
+                    <!---
+                    <resources>
+                        <resource>
+                            <directory>${basedir}/../slides-base/src/main/resources</directory>
+                        </resource>
+                    </resources>-->
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.googlecode.maven-download-plugin</groupId>
+                <artifactId>download-maven-plugin</artifactId>
+                <version>1.13.0</version>
+                <executions>
+                    <execution>
+                        <id>install-revealjs</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>wget</goal>
+                        </goals>
+                        <configuration>
+                            <url>https://github.com/hakimel/reveal.js/archive/${revealjs.version}.zip</url>
+                            <unpack>true</unpack>
+                            <outputFileName>reveal.js-${revealjs.version}.zip</outputFileName>
+                            <outputDirectory>${project.slides.directory}</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.jruby.maven</groupId>
+                <artifactId>gem-maven-plugin</artifactId>
+                <version>3.0.6</version>
+                <configuration>
+                    <jrubyVersion>${jruby.version}</jrubyVersion>
+                    <gemHome>${project.build.directory}/gems</gemHome>
+                    <gemPath>${project.build.directory}/gems</gemPath>
+                </configuration>
+                <executions>
+                    <!-- Install required gems in target directory -->
+                    <execution>
+                        <id>install-gems</id>
+                        <goals>
+                            <goal>initialize</goal>
+                        </goals>
+                        <phase>initialize</phase>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.asciidoctor</groupId>
+                <artifactId>asciidoctor-maven-plugin</artifactId>
+                <version>${asciidoctor.maven.plugin.version}</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.jruby</groupId>
+                        <artifactId>jruby</artifactId>
+                        <version>${jruby.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.asciidoctor</groupId>
+                        <artifactId>asciidoctorj</artifactId>
+                        <version>${asciidoctorj.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.asciidoctor</groupId>
+                        <artifactId>asciidoctorj-diagram</artifactId>
+                        <version>${asciidoctorj.diagram.version}</version>
+                    </dependency>
+                    <!-- Since asciidoctorj-diagram 2.3.0 PlantUML is no longer bundled and must be added explicitly -->
+                    <dependency>
+                        <groupId>org.asciidoctor</groupId>
+                        <artifactId>asciidoctorj-diagram-plantuml</artifactId>
+                        <version>${asciidoctorj.diagram.plantuml.version}</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <sourceDirectory>src/main/asciidoc</sourceDirectory>
+                    <logHandler>
+                        <outputToConsole>true</outputToConsole>
+                    </logHandler>
+                    <!-- include the asciidoctor-revealjs gem -->
+                    <gemPath>${project.build.directory}/gems</gemPath>
+                    <requires>
+                        <require>asciidoctor-revealjs</require>
+                        <require>asciidoctor-diagram</require>
+                        <!-- registers the `github-classic` Rouge theme, see the file for why -->
+                        <require>${basedir}/../slides-base/src/main/ruby/rouge-github-classic.rb</require>
+                    </requires>
+                    <outputDirectory>${project.slides.directory}</outputDirectory>
+                    <backend>revealjs</backend>
+                    <attributes>
+                        <!--
+                                As we are downloading reveal.js in runtime, it sits in a nonstandard folder `reveal.js-${revealjs.version}`
+                            -->
+                        <revealjsdir>reveal.js-${revealjs.version}</revealjsdir>
+                        <!-- put here the reveal.js specific attributes -->
+                        <sourcedir>${basedir}/src/main/java</sourcedir>
+                        <revealjs_theme>black</revealjs_theme>
+                        <!--<revealjs_transition>linear</revealjs_transition>-->
+                        <project-version>${project.version}</project-version>
+                        <rouge-style>github-classic</rouge-style>
+                        <rouge-css>style</rouge-css>
+                        <source-highlighter>rouge</source-highlighter>
+                    </attributes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>generate-ru-slides</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>process-asciidoc</goal>
+                        </goals>
+                        <configuration>
+                            <sourceDocumentName>lecture.adoc</sourceDocumentName>
+                            <outputFile>index.html</outputFile>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <repositories>
+        <repository>
+            <id>mavengems</id>
+            <url>mavengem:https://rubygems.org</url>
+        </repository>
+    </repositories>
+
+</project>
